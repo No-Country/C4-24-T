@@ -4,7 +4,10 @@ import {LinkContainer} from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Home from './Page/Home';
-import logo from './Page/circulo.png'
+import logo from './image/circulo.png'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Carrusel from './Components/Carrusel.jsx'
+
 
 
 function App() {
@@ -40,8 +43,8 @@ function App() {
     </header>
     <main>
     <Home/>
+    <Carrusel/>
     </main>
-      
 
   </BrowserRouter>
   );
