@@ -13,7 +13,7 @@ header a{
   font-weight: bold;
 }
 header img{
-  width: 4rem;
+  width: 5rem;
   
 }
 
@@ -29,4 +29,7 @@ header img{
 .containero{
   margin: 6rem;
 }
-
+.color-nav {
+  
+  background-color: #781D42 !important;
+}

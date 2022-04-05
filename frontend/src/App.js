@@ -5,8 +5,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Home from './Page/Home';
 import logo from './image/circulo.png'
+import registrar from './image/registra.png'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Carrusel from './Components/Carrusel.jsx'
+import FooterComp from './Components/footer/FooterComp';
+
 
 
 
@@ -14,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <header >
-        <Navbar collapseOnSelect expand="lg"  fixed="top" variant="light">
+        <Navbar className='color-nav' collapseOnSelect expand="lg"  fixed="top" variant="dark">
           <Container>
             <LinkContainer to="/">
               <Navbar.Brand> <img src={logo} alt="logo" /> </Navbar.Brand>
@@ -34,7 +36,7 @@ function App() {
                 <Nav.Link href="#memes">Ingresar</Nav.Link>
               </Nav>
             <LinkContainer to="/">
-              <Navbar.Brand> <img src={logo} alt="logo" /> </Navbar.Brand>
+              <Navbar.Brand> <img src={registrar} alt="logo" /> </Navbar.Brand>
             </LinkContainer>
             
             </Navbar.Collapse>
@@ -43,7 +45,7 @@ function App() {
     </header>
     <main>
     <Home/>
-    <Carrusel/>
+    <FooterComp/>
     </main>
 
   </BrowserRouter>
