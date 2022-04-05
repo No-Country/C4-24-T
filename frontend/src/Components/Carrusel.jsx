@@ -4,6 +4,7 @@ import Carousel from "react-elastic-carousel";
 import styled from "styled-components";
 import ItemCarrusel from "./itemCarrusel";
 import "../styles/styles.css";
+import Button from 'react-bootstrap/Button';
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
@@ -14,6 +15,7 @@ const breakPoints = [
 
 function Carrusel() {
     return (
+      <>
     <CarruselStyled>
         <h1 style={{ textAlign: "center" }}>Nuestros Profesionales</h1>
         <h2 style={{ textAlign: "center" }}>Nuestros especialistas están calificados y cuentan <br></br> con experiencia para dar el mejor servicio</h2>
@@ -29,13 +31,24 @@ function Carrusel() {
           <ItemCarrusel>Eight</ItemCarrusel>
         </Carousel>
       </div>
+    <div className='boton'>
+    <Button variant="primary">Explorar</Button>
+    </div>
+    
     </CarruselStyled>
+    </>
   );
 }
 const CarruselStyled = styled.div`
 
     h2{
         margin-top: 5rem ;
+    }
+
+    .boton{
+      display:flex ;
+      justify-content: flex-end;
+      
     }
 `;
 

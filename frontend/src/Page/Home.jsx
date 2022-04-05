@@ -2,11 +2,17 @@ import React from 'react'
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button'
 import resume from '../image/paisa.jpg';
-import { MainLayout } from '../styles/Layouts';
+import { InnerLayout, MainLayout } from '../styles/Layouts';
+import Carrusel from '../Components/Carrusel';
+import ServiciosHome from '../Components/ServiciosHome';
+import Servicio from '../Components/ServicioHome/Servicio';
+
+
 
 
 function Home() {
     return (
+        <>
         <MainLayout>
         <ImageSectionStyled>
             
@@ -23,8 +29,19 @@ function Home() {
             <div className="left-content">
                 <img src={resume} alt=""/>
             </div>
+            
         </ImageSectionStyled>
         </MainLayout>
+        <InnerLayout>
+        <Servicio/>
+        </InnerLayout>
+        <MainLayout>
+        <InnerLayout>
+        <Carrusel/>
+        </InnerLayout>
+        </MainLayout>
+        <ServiciosHome/>
+        </>
     )
 }
 
@@ -93,8 +110,7 @@ const ImageSectionStyled = styled.div`
                 font-size: .8rem;
             }
         }
-        
-        
     }
+    
 `;
 export default Home;
