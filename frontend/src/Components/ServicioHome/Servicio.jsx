@@ -34,14 +34,24 @@ ul.nav > li > a {
     color: white;
     text-decoration: none;
     font-size: 3rem ;
-}
-img{
-    padding: 10px 30px;
+    @media screen and (max-width:1250px){
+                font-size: 2.1rem;
+            }
+            @media screen and (max-width:962px){
+                        font-size: 1.8rem;
+                    }
     
 }
+
 span{
     font-size:4rem ;
-
+    @media screen and (max-width:1250px){
+                font-size: 2.5rem;
+            }
+            @media screen and (max-width:962px){
+                        font-size: 1.5rem;
+                    }
+        
 }
 `;
 
