@@ -33,3 +33,43 @@ header img{
   
   background-color: #781D42 !important;
 }
+
+.card {
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #de824da4 !important;
+  background-clip: border-box !;
+  border: 1px solid rgb(255, 8, 8);
+  border-radius: 10% !important;
+  margin: 1rem;
+  align-items: center;
+  
+}
+.card-gruop{
+  display: flex;
+  /* background-color: #de824da4; */
+  border-radius: 3rem;
+  justify-content: center;
+
+}
+.card-group {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+}
+
+.card-text{
+  justify-content: space-evenly;
+  display: flex;
+  color: aliceblue;
+}
+.card-title{
+  color: aliceblue;
+  justify-content: space-evenly;
+  display: flex;
+}
+
+
