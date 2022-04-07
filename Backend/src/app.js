@@ -4,7 +4,7 @@ const app = express();
 // const cors = require('cors');
 const routerApi = require('./routes');
 
-//const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.hander');
+const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.hander');
 
 
 const port = process.env.PORT || 3000;
@@ -37,9 +37,9 @@ app.get('/', (req, res) =>{
 routerApi(app)
 // despues del puting de la routerApi
 //importante revisar el orden de ejecucion
-// app.use(logErrors)
-// app.use(boomErrorHandler)
-// app.use(errorHandler)
+ app.use(logErrors)
+ app.use(boomErrorHandler)
+ app.use(errorHandler)
 
 app.listen(port,() => {
   console.log('listening on port '+ port)
