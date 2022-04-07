@@ -1,7 +1,10 @@
 const usersModel = require("../models/usersModel");
 const bcryptjs = require('bcryptjs');
+const boom = require('@hapi/boom');
+
 const path = require('path');
 const fs = require('fs');
+const { validationResult } = require('express-validator');
 
 const usersAPIController = {
   list: async (req, res) => {
@@ -47,6 +50,28 @@ const usersAPIController = {
   },
   create: async (req, res) => {
     try {
+      const resultValidation = validationResult(req);
+      if (resultValidation.errors.length > 0) {
+        req.file.filename?fs.unlinkSync(path.join(__dirname, '../../public/img/'+req.file.filename)):null
+        res.status(400).json({
+          errors: resultValidation.mapped(),
+      })
+      }else{
+        let userInDB = await usersModel.findByEmail(req.body.email)
+        let username = await usersModel.findByUser(req.body.user_name)
+        if (userInDB) {
+          req.file.filename?fs.unlinkSync(path.join(__dirname, '../../public/img/'+req.file.filename)):null
+          res.status(400).json({
+            message: "Email ya existe",
+            user: username
+          })
+        }else{
+          if(username) {
+            req.file.filename?fs.unlinkSync(path.join(__dirname, '../../public/img/'+req.file.filename)):null
+            res.status(400).json({
+              message: "Usuario ya existe",
+            })
+          }else{
           let {user_name, password}= req.body
           const {document_number,name,last_name,email,phone,phone2,description_profile,document_type_id,user_type_id} = req.body
           password= bcryptjs.hashSync(password, 10)
@@ -72,9 +97,13 @@ const usersAPIController = {
             res.status(201).json({
               create,
             });
-          }  catch (error) {
-            res.status(400).json({
-              message: error.message,
+        }
+      }
+      }
+          
+    }  catch (error) {
+          res.status(400).json({
+          message: error.message,
       });
     }
   },
@@ -97,9 +126,7 @@ const usersAPIController = {
               id: id,
             });
           } else {
-            res.status(404).json({
-              message: "Error id not found",
-            });
+            throw boom.notFound('product not found');
           } 
           }  catch (error) {
             res.status(400).json({
@@ -107,7 +134,7 @@ const usersAPIController = {
       });
     }
   },
-  update: async (req, res) => {
+  update: async (req, res, next) => {
     try {
       let update;
       const { id } = req.params;
@@ -122,12 +149,13 @@ const usersAPIController = {
        
       if (update[0] == 1) {
         if (detail == null || detail == undefined) {
+
           res.status(404).json({
-            message: "campaign Not Fount",
+            message: "User Not Fount",
           });
         } else {
           let validation=[null,undefined,"","default-user.png"]
-          if(validation.includes(user.avatar)){
+          if(!validation.includes(oldAvatar)){
             fs.unlinkSync(path.join(__dirname, '../../public/img/'+ oldAvatar))
           }
 
@@ -139,14 +167,14 @@ const usersAPIController = {
 
         }
       } else {
+        // throw boom.notImplemented('not changed recorted')
         res.status(404).json({
-          message: "no changes recorded",
+          message: "not changed recorted",
         });
       }
     } catch (error) {
-      res.status(404).json({
-        message: error.message,
-      });
+      // next(error);
+      console.log(error)
     }
   },
 

@@ -88,5 +88,29 @@ const usersModel = {
       console.log(error.message);
     }
   },
+  findByEmail : async function(email) {
+		try{
+		 const allUsers = await this.find();
+		 const userFound = await allUsers.find((user) => 
+		 user.email === email);
+		 return userFound;
+	 } catch (err){
+		 console.log(err)
+		 return err;
+	 }
+	 },
+   findByUser : async function(username) {
+		try{
+		 const allUsers = await db.login.findAll();
+		 const userFound = await allUsers.find((user) => 
+		 user.user_name === username
+     )
+		 return userFound
+
+	 } catch (err){
+		 console.log(err)
+		 return err;
+	 }
+	 },
 };
 module.exports = usersModel;
