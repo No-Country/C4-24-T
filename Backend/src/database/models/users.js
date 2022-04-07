@@ -39,6 +39,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(400),
       allowNull: false
     },
+    login_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'login',
+        key: 'id'
+      }
+    },
     document_type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -52,14 +60,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       references: {
         model: 'user_type',
-        key: 'id'
-      }
-    },
-    login_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'login',
         key: 'id'
       }
     }

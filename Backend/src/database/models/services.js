@@ -9,8 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     name: {
       type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: "name_UNIQUE"
+      allowNull: false
     },
     image: {
       type: DataTypes.STRING(400),
@@ -67,14 +66,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "name_UNIQUE",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "name" },
         ]
       },
       {

@@ -1,18 +1,18 @@
-let DataTypes = require("sequelize").DataTypes;
-let _document_type = require("./document_type");
-let _login = require("./login");
-let _qualifications = require("./qualifications");
-let _services = require("./services");
-let _user_type = require("./user_type");
-let _users = require("./users");
+var DataTypes = require("sequelize").DataTypes;
+var _document_type = require("./document_type");
+var _login = require("./login");
+var _qualifications = require("./qualifications");
+var _services = require("./services");
+var _user_type = require("./user_type");
+var _users = require("./users");
 
 function initModels(sequelize) {
-  let document_type = _document_type(sequelize, DataTypes);
-  let login = _login(sequelize, DataTypes);
-  let qualifications = _qualifications(sequelize, DataTypes);
-  let services = _services(sequelize, DataTypes);
-  let user_type = _user_type(sequelize, DataTypes);
-  let users = _users(sequelize, DataTypes);
+  var document_type = _document_type(sequelize, DataTypes);
+  var login = _login(sequelize, DataTypes);
+  var qualifications = _qualifications(sequelize, DataTypes);
+  var services = _services(sequelize, DataTypes);
+  var user_type = _user_type(sequelize, DataTypes);
+  var users = _users(sequelize, DataTypes);
 
   users.belongsTo(document_type, { as: "document_type", foreignKey: "document_type_id"});
   document_type.hasMany(users, { as: "users", foreignKey: "document_type_id"});
