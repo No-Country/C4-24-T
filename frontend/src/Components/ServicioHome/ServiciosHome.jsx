@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
-import { MainLayout } from '../styles/Layouts'
+import { MainLayout } from '../../styles/Layouts'
 import Card from 'react-bootstrap/Card'
-import registra from '../image/profesional.png'
-import certificacion from '../image/certificacion.png'
-import experiencia from '../image/experiencia.png'
+import registra from '../../image/profesional.png'
+import certificacion from '../../image/certificacion.png'
+import experiencia from '../../image/experiencia.png'
 import Button from 'react-bootstrap/esm/Button';
 import CardGroup from 'react-bootstrap/CardGroup'
 

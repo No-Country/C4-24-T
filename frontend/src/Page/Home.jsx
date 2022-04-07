@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button'
 import resume from '../image/paisa.jpg';
 import { InnerLayout, MainLayout } from '../styles/Layouts';
-import Carrusel from '../Components/Carrusel';
-import ServiciosHome from '../Components/ServiciosHome';
+import Carrusel from '../Components/Carrusel/Carrusel';
+import ServiciosHome from '../Components/ServicioHome/ServiciosHome';
 import Servicio from '../Components/ServicioHome/Servicio';
+import FooterComp from '../Components/footer/FooterComp';
+
 
 
 
@@ -41,6 +43,7 @@ function Home() {
         </InnerLayout>
         </MainLayout>
         <ServiciosHome/>
+        <FooterComp/>
         </>
     )
 }
