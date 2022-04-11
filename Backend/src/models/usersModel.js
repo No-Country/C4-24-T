@@ -112,5 +112,18 @@ const usersModel = {
 		 return err;
 	 }
 	 },
+   findByDocument: async function(document_number) {
+     try {
+       const user = await db.users.findAll({
+         where:{
+           document_number: document_number
+         }
+       })
+       return user;
+     } catch (err){
+       console.log(err)
+		 return err;
+     }
+   }
 };
 module.exports = usersModel;
