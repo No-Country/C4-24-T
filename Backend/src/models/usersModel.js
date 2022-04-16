@@ -124,6 +124,17 @@ const usersModel = {
        console.log(err)
 		 return err;
      }
+   },
+   findbyPkUser: async (user_name) => {
+    try {
+      const user = await db.login.findAll({
+        where:{ user_name: user_name
+        }
+      })
+      return user;
+    } catch (error) {
+      return error;
+    }
    }
 };
 module.exports = usersModel;

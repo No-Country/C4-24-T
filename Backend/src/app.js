@@ -26,9 +26,9 @@ app.use(express.json());
 // app.use(cors(options));
 app.use(express.static("./public"));
 // //URL encode  - Para que nos pueda llegar la información desde el formulario al req.body
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 // //Middleware de aplicación el cual se encargue de controlar la posibilidad de usar otros métodos diferentes al GET y al POST, en nuestros formularios
-// app.use(methodOverride('_method'));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) =>{
   res.send('Welcome')

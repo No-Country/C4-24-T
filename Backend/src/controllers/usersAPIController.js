@@ -1,5 +1,5 @@
 const usersModel = require("../models/usersModel");
-//const path = require('path');
+
 const bcryptjs = require('bcryptjs');
 const boom = require("@hapi/boom");
 
@@ -248,6 +248,7 @@ const usersAPIController = {
       });
     }
   },
+  
 };
 
 module.exports = usersAPIController;
