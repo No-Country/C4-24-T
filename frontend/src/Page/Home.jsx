@@ -53,6 +53,8 @@ function Home() {
 const ImageSectionStyled = styled.div`
     margin-top: 5rem;
     display: flex;
+    width:90%;
+    margin-left:10%;
     
     @media screen and (max-width:1000px){
         flex-direction: column-reverse;
