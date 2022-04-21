@@ -1,8 +1,6 @@
 const usersModel = require("../models/usersModel");
-
 const bcryptjs = require('bcryptjs');
 const boom = require("@hapi/boom");
-
 const path = require("path");
 const fs = require("fs");
 const { validationResult } = require("express-validator");
@@ -213,7 +211,6 @@ const usersAPIController = {
       console.log(error);
     }
   },
-
   detail: async (req, res) => {
     try {
       let { id } = req.params;
@@ -248,7 +245,63 @@ const usersAPIController = {
       });
     }
   },
-  
+  login: async (req, res) => {
+    try {
+      let userToLogin = await usersModel.findbyPkUser(req.body.user_name);
+      if (userToLogin[0]) {
+        let isOkThePassword = bcryptjs.compareSync(req.body.password, userToLogin[0].password);
+        if (isOkThePassword) {
+          //elimino la clave por seguridad
+				  delete userToLogin[0].password; 
+          //conservar la sesion del usuario
+          req.session.userLogged = userToLogin;
+          
+          res.status(200).json({sesion:req.session.userLogged});
+        }else{
+          return res.status(404).json({
+            message: "Credenciales invalidas",
+          });
+        }
+        
+      } else {
+        return res.status(404).json({
+          message: "404 user Not Found",
+        });
+      }
+    } catch (error) {
+      return error.message;
+    }
+    
+    
+
+   
+    
+
+  },
+  logout: (req, res) => {
+    try {
+      	//elimino la cookie para poderme desloguear
+		//res.clearCookie('userEmail');
+	// borro lo que este en sesion
+    if (req.session.userLogged){
+      if(req.session.destroy()){
+        return res.status(200).json({
+          message:'session ended',
+          logout: true,
+        })
+      }
+    }
+		else{
+      return res.status(404).json({
+        message: "404 sesion Not Found",
+      });
+    }
+
+    } catch (error) {
+      return error.message
+    }
+	
+	},
 };
 
 module.exports = usersAPIController;

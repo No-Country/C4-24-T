@@ -1,9 +1,16 @@
 const express = require('express');
+const session = require('express-session');
+const cookies = require('cookie-parser');
 const methodOverride = require('method-override');
 const app = express();
-// const cors = require('cors');
+const cors = require('cors');
 const routerApi = require('./routes');
-
+app.use(session({
+	secret: "Shhh, It's a secret",
+	resave: true,
+	saveUninitialized: true,
+}));
+app.use(cookies());
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.hander');
 
 
@@ -22,7 +29,7 @@ app.use(express.json());
 //     }
 //   }
 // }
-
+app.use(cors());
 // app.use(cors(options));
 app.use(express.static("./public"));
 // //URL encode  - Para que nos pueda llegar la información desde el formulario al req.body
