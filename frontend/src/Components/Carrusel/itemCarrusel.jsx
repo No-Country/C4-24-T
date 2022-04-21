@@ -5,10 +5,11 @@ export default styled.div`
   justify-content: center;
   align-items: center;
   height: 250px;
-  width: 100%;
-  background-color: #683bb7;
+  width: 70%;
+  background-color: #E5E5E5;
   color: #fff;
   margin: 15px;
   font-size: 4em;
+  border-radius:100%;
   
 `;

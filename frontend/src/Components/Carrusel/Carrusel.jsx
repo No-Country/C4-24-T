@@ -14,9 +14,9 @@ const breakPoints = [
 ];
 
 function Carrusel() {
-  const [items, setItems] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [items, /* setItems */] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
 
-  const addItem = () => {
+/*   const addItem = () => {
     const nextItem = Math.max(1, items.length + 1);
     setItems([...items, nextItem]);
   };
@@ -24,7 +24,7 @@ function Carrusel() {
   const removeItem = () => {
     const endRange = Math.max(0, items.length - 1);
     setItems(items.slice(0, endRange));
-  };
+  }; */
 
   return (
     <>
@@ -53,9 +53,16 @@ function Carrusel() {
   );
 }
 const CarruselStyled = styled.div`
+
+    margin:1em;
+    
+    h1{
+      color:#FF0035;
+    }
     
     h2{
         margin-top: 5rem ;
+        color:#0E131F;
     }
     .boton{
       display:flex ;

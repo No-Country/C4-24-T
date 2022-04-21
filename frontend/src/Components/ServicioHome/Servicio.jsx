@@ -1,58 +1,44 @@
 import React from 'react'
 import styled from 'styled-components'
+import cert1 from '../../image/cert1.jpeg';
+import cert2 from '../../image/cert2.jpeg';
+import cert3 from '../../image/cert3.jpeg';
+import cert4 from '../../image/cert4.jpeg'; 
+
 
 
 const Servicio = () => {
     return (
     <ServicioStyled>  
-<ul className="nav">
-  <li><a href="/home"><span>●</span>Servicio</a></li>
-  <li><a href="/home"><span>●</span>Seguridad</a></li>
-  <li><a href="/blog"><span>●</span>Confiabilidad</a></li>
-</ul>
+
+    <div className='certNavBar shadow p-3 mb-5 rounded'>
+        <div className='certCtn'><img src={cert1} alt='certificacionProf'/></div>
+        <div className='certCtn'><img src={cert2} alt='certificacionProf'/></div>
+        <div className='certCtn'><img src={cert3} alt='certificacionProf'/></div>
+        <div className='certCtn'><img src={cert4} alt='certificacionProf'/></div>
+    </div>
 
     </ServicioStyled>
     )
 }
-const ServicioStyled = styled.div`
-    background-color: #DE834D;
-    display: flex ;
-    align-content: space-around;
-    flex-direction: column;
-    flex-wrap: wrap;
-    
-ul.nav {
-  padding-left: 0px;
-  text-align: center;
-}
-ul.nav > li {
-  
-    padding: 10px 60px;
-}
+const ServicioStyled = styled.div`     
 
-ul.nav > li > a {
-    color: white;
-    text-decoration: none;
-    font-size: 3rem ;
-    @media screen and (max-width:1250px){
-                font-size: 2.1rem;
-            }
-            @media screen and (max-width:962px){
-                        font-size: 1.8rem;
-                    }
-    
-}
-
-span{
-    font-size:4rem ;
-    @media screen and (max-width:1250px){
-                font-size: 2.5rem;
-            }
-            @media screen and (max-width:962px){
-                        font-size: 1.5rem;
-                    }
+    .certNavBar{
+        margin-left:5%;
+        width:90%;
+        display:flex; 
+        justify-content:space-around;  
+        background-color: #f7f7f7;     
         
-}
+    }
+   
+
+    img{
+        width:10em;
+        height:9em;
+    }
+
+
 `;
 
 export default Servicio
