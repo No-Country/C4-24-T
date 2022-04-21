@@ -7,6 +7,7 @@ import Carrusel from '../Components/Carrusel/Carrusel';
 import ServiciosHome from '../Components/ServicioHome/ServiciosHome';
 import Servicio from '../Components/ServicioHome/Servicio';
 import FooterComp from '../Components/footer/FooterComp';
+import Resultados from '../Components/ServicioHome/Resultados';
 
 
 
@@ -19,13 +20,12 @@ function Home() {
         <ImageSectionStyled>
             
             <div className="right-content">
-                <h4>¿Necesitas ayuda y estás en buscando de un profesional? </h4>
+                <h4><span>¿Necesitas ayuda</span> y estás en <span>busca</span> de un profesional? </h4>
                 <p className="paragraph">
-                    contáctate con nuestros especialistas. Están certificados y te van a brindar el mejor servicio.
-                    
+                    Contáctate con nuestros especialistas. <br></br> Están certificados y te van a brindar el <br></br> mejor servicio.                    
                 </p>
                 <div className='boton'>
-                <Button variant="primary">Explorar Servicios</Button>
+                <Button variant="primary" size="sm" className='styledButton shadow-sm p-3 mb-5'>Explorar Servicios</Button>
                 </div>
             </div>
             <div className="left-content">
@@ -43,6 +43,7 @@ function Home() {
         </InnerLayout>
         </MainLayout>
         <ServiciosHome/>
+        <Resultados/>
         <FooterComp/>
         </>
     )
@@ -59,24 +60,33 @@ const ImageSectionStyled = styled.div`
             margin-bottom: 2rem;
         }
     }
+
     .left-content{
         width: 100%;
         display:flex ;
         justify-content: space-around;
         align-content: space-around;
         flex-wrap: wrap;
+        
         img{
-            width: 70%;
-            border-radius: 50% ;
+            width: 100%;
+            
+            position:relative;
+            left:-20%;
+            z-index:-10;  
 
         }
     }
     .right-content{
-        width: 100%;
+        width: 80%;
+        
+        
         
         h4{
+            
             font-size: 4rem;
             margin-top: 5rem;
+            
             @media screen and (max-width:1400px){
                 font-size: 3.5rem;
             }
@@ -100,6 +110,15 @@ const ImageSectionStyled = styled.div`
                 margin-top: .9rem;
             }
         }
+
+        span{
+            color:#FF0035;
+            font-size: 4rem;
+            margin-top: 5rem;
+             }
+
+      
+
         .paragraph{
             padding: 1rem 0;
             font-size: 1.5rem ;
@@ -112,6 +131,13 @@ const ImageSectionStyled = styled.div`
             @media screen and (max-width:522px){
                 font-size: .8rem;
             }
+        }      
+
+        .styledButton{
+            border-radius:2em;
+            background-color:#38405F;
+            width:50%;
+            
         }
     }
     

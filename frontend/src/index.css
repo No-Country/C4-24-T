@@ -6,11 +6,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #0E131F !important;
+  
+  
 }
 
 header a{
+  color:#38405F !important;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: normal  ;
 }
 header img{
   width: 5rem;
@@ -29,9 +33,9 @@ header img{
 .containero{
   margin: 6rem;
 }
-.color-nav {
+.color-nav {  
+  background-color: #f7f7f7 !important; 
   
-  background-color: #781D42 !important;
 }
 
 .card {
@@ -40,7 +44,7 @@ header img{
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #de824da4 !important;
+  background-color: #37405F  !important;
   background-clip: border-box !;
   border: 1px solid rgb(255, 8, 8);
   border-radius: 10% !important;
