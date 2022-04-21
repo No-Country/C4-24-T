@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from './FooterItem';
-import Ensayo from '../../image/ensayo.jpg'
+import footerLogo from '../../image/logoFooter.jpeg'
 import { Icon } from '../../styles/icons';
 
 
@@ -10,7 +10,7 @@ function FooterComp() {
             <Footer.Wrapper>
                 <Footer.Row>
                     <Footer.Column>
-                    <Footer.Il><img src={Ensayo} alt=""/></Footer.Il>
+                    <Footer.Il><img src={footerLogo} alt="logo" className='footerLogo'/></Footer.Il>
                         <Footer.Title>Servicios Profesionales</Footer.Title>
                         <Footer.Title>Nuestras redes</Footer.Title>
                         <Footer.Link href="https://www.facebook.com/" target="_blank" ><Icon className="fab fa-facebook-f" />Facebook</Footer.Link>

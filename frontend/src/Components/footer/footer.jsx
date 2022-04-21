@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    padding: 20px 10px;
-    background: #781D42;
+    padding: 20px 10px;    
+    background-image:linear-gradient(275.38deg, #38405F 0%, rgba(56, 64, 95, 0) 57.92%);
     @media (max-width: 1000px) {
         padding: 20px 10px;
     }
@@ -34,7 +34,7 @@ export const Row = styled.div`
 `;
 
 export const Link = styled.a`
-    color: #fff;
+    color:#37405F;
     margin-bottom: 10px;
     font-size: 16px;
     text-decoration: none;
@@ -46,12 +46,12 @@ export const Link = styled.a`
 
 export const Title = styled.p`
     font-size: 18px;
-    color: #F0D290;
+    color:#37405F;
     margin-bottom: 10px;
 `;
 
 export const Il = styled.p`
-    color: #fff;
+    color:#37405F;
     margin-bottom: 5px;
     font-size: 16px;
     text-decoration: none;
@@ -59,5 +59,5 @@ export const Il = styled.p`
 `;
 
 export const Img = styled.div`
-width: 10px;
+width: 100px;
 `;

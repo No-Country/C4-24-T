@@ -22,104 +22,106 @@ import Icon from '../Icons/Icons';
 import InputFiles from 'react-input-files';
 import { MainLayout } from '../../styles/Layouts';
 
-
-
-
-
 const DisplayingErrorMessagesSchema = Yup.object().shape({
-    nombre: Yup.string()
-        .min(3, 'Nombre muy corto!')
-        .max(100, 'Nombre muy largo!')
+    name: Yup.string()
+        .min(2, 'Nombre muy corto!')
+        .max(40, 'Nombre muy largo!')
         .required('Campo Requerido'),
-    mail: Yup.string().email('Invalid email').required('Campo Requerido'),
-    telefono1: Yup.string()
-        .min(5, 'Numero muy corto!')
-        .max(12, 'Numero muy largo!')
+    last_name: Yup.string()
+        .min(2, 'Nombre muy corto!')
+        .max(40, 'Nombre muy largo!')
         .required('Campo Requerido'),
-    telefono2: Yup.string()
-        .min(5, 'Numero muy corto!')
-        .max(12, 'Numero muy largo!'),
+    document_number: Yup.string()
+        .min(2, 'Nombre muy corto!')
+        .max(40, 'Nombre muy largo!')
+        .required('Campo Requerido'),
+    email: Yup.string().email('Invalid email').required('Campo Requerido'),
+    phone: Yup.number()
+        .min(0, 'Numero muy corto!')
+        .max(9999999999999, 'Numero muy largo!')
+        .required('Campo Requerido'),
+    phone2: Yup.number()
+        .min(0, 'Numero muy corto!')
+        .max(9999999999999, 'Numero muy largo!'),
     password: Yup.string()
         .min(8, 'Constraseña muy corta!')
         .max(20, 'Contraseña muy larga!')
-        .required('Campo Requerido'),    
-/*     direccion: Yup.string()
+        .required('Campo Requerido'),
+    description_profile: Yup.string()
+            .min(10, 'Mensaje muy corto!')
+            .max(500, 'Mensaje muy largo!')
+            .required('Campo Requerido'),
+    document_type_id: Yup.string()
+        .min(1, 'Direccion muy corta!')
+        .max(40, 'Direccion muy largo!')
+        .required('Campo Requerido'),
+    user_type_id: Yup.string()
+        .min(1, 'Direccion muy corta!')
+        .max(40, 'Direccion muy largo!')
+        .required('Campo Requerido'),
+    user_name: Yup.string()
         .min(3, 'Direccion muy corta!')
         .max(40, 'Direccion muy largo!')
-        .required('Campo Requerido'), */
-    msg_description: Yup.string()
-        .min(12, 'Mensaje muy corto!')
-        .max(400, 'Mensaje muy largo!')
         .required('Campo Requerido'),
 });
 
-const carga = async (values, file, departamento, ciudad) => {
+const carga = async (value, file) => {
     const {
-        nombre,
-        telefono1,
-        telefono2,
-        mail,
+        name,
+        last_name,
+        document_number,
+        email,
+        phone,
+        phone2,
         password,
-        actividad,
-        direccion,
-        msg_description,
-        telegram,
-        whatsapp,
-        twitter,
-        facebook,
-        linkedin,
-        instagram,
-    } = values;
+        description_profile,
+        document_type_id,
+        user_type_id,
+        user_name,
+        
+    } = value;
 
     const data = new FormData();
-    data.append('img', file);
-    data.append('nombre', nombre);
-    data.append('telefono1', telefono1);
-    data.append('telefono2', telefono2);
-    data.append('mail', mail);
+    data.append('avatar', file);
+    data.append('name', name);
+    data.append('last_name', last_name);
+    data.append('document_number', document_number);
+    data.append('email', email);
+    data.append('phone', phone);
+    data.append('phone2', phone2);
     data.append('password', password);
-    data.append('actividad', actividad);
-    data.append('direccion', direccion);
-    data.append('msg_description', msg_description);
-    data.append('departamento', departamento);
-    data.append('ciudad', ciudad);
-    data.append('telegram', telegram);
-    data.append('whatsapp', whatsapp);
-    data.append('twitter', twitter);
-    data.append('facebook', facebook);
-    data.append('linkedin', linkedin);
-    data.append('instagram', instagram);
+    data.append('description_profile', description_profile);
+    data.append('document_type_id', document_type_id);
+    data.append('user_type_id', user_type_id);
+    data.append('user_name', user_name);
 
-    await Axios.post('profesional/create', data)
+    await Axios.post('https://app-work-fast.herokuapp.com/api/v1/users/', data)
         .then((response) => {
-            const auth = response.data.auth;
-            if (!auth) {
+            const user_name = response.data.message;
+            if (!user_name) {
                 Swal.fire({
                     icon: 'error',
-                    title: response.data.mensaje,
+                    title: response.data.message,
                     showConfirmButton: false,
                     timer: 1500,
                 });
             } else {
-                const token = response.data.token;
-                const id = response.data.id;
-                sessionStorage.clear();
-                sessionStorage.setItem('token', token);
-                sessionStorage.setItem('id', id);
-                sessionStorage.setItem('rol', 'empresa');
-                window.location.href = '/profesional'; //pendiente ruta de pagina a la que pasara despues de login
+                console.log(response);
+                
+                window.location.href = '/profesional'; 
 
                 Swal.fire({
                     icon: 'success',
-                    title: response.data.mensaje,
+                    title: response.data.message,
                     showConfirmButton: false,
                     timer: 1500,
                 });
             }
         })
-        .catch((err) => {
-            console.log(err);
+        .catch((message) => {
+            console.log(message);
         });
+    return 'profesionales';
 };
 
 // Creacion de options para selects
@@ -129,10 +131,8 @@ const options = (item, i) => (
     </option>
 );
 
-export const RegistroComp = () => {
+export const RegistroProfesional = () => {
     const [file, setFile] = useState({ name: '' });
-    const [departamento, setDepartamento] = useState();
-    const [ciudad, setCiudad] = useState('');
     const [show, setShow] = useState(false);
 
     // Close modal
@@ -142,240 +142,272 @@ export const RegistroComp = () => {
 
     return (
         <MainLayout>
-            <Container>
-                <Formik
-                    initialValues={{
-                        nombre: '',
-                        mail: '',
-                        telefono1: '',
-                        telefono2: '',
-                        password: '',                         
-                        msg_description: '',
-                        terms: false,
-                        
-                    }}
-                    validationSchema={DisplayingErrorMessagesSchema}
-                    onSubmit={(values) => carga(values, file, departamento, ciudad)}
-                >
-                    {({ errors, touched }) => (
-                        <Form>
-                            <Row className="mb-3">
-                                <FormGroup
-                                    as={Col}
-                                    md="4"
-                                    controlId="form1"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Nombre - Razon Social</FormLabel>
-                                    <Field
-                                        name="nombre"
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Ingrese nombre o la razon social"
-                                    />
-                                    {touched.nombre && errors.nombre && (
-                                        <div>{errors.nombre}</div>
-                                    )}
-                                </FormGroup>
-                                <FormGroup
-                                    as={Col}
-                                    md="4"
-                                    controlId="form2"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Correo electronico</FormLabel>
-                                    <Field
-                                        name="mail"
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Ingrese correo electronico"
-                                    />
-                                    {touched.mail && errors.mail && (
-                                        <div>{errors.mail}</div>
-                                    )}
-                                </FormGroup>
-                                <FormGroup
-                                    as={Col}
-                                    md="4"
-                                    controlId="form3"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Clave</FormLabel>
-                                    <Field
-                                        name="password"
-                                        type="password"
-                                        className="form-control"
-                                        placeholder="Escriba su clave"
-                                    />
-                                    {touched.password && errors.password && (
-                                        <div>{errors.password}</div>
-                                    )}
-                                </FormGroup>
-                            </Row>
-                            <Row className="mb-3">
-                                <FormGroup
-                                    as={Col}
-                                    md="3"
-                                    controlId="form4"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Telefono de contacto 1</FormLabel>
-                                    <Field
-                                        name="telefono1"
-                                        className="form-control"
-                                        type="number"
-                                        placeholder="Ingrese telefono de contacto"
-                                    />
-                                    {touched.telefono1 && errors.telefono1 && (
-                                        <div>{errors.telefono1}</div>
-                                    )}
-                                </FormGroup>
-                                <FormGroup
-                                    as={Col}
-                                    md="3"
-                                    controlId="form5"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Telefono de contacto 2</FormLabel>
-                                    <Field
-                                        name="telefono2"
-                                        className="form-control"
-                                        type="number"
-                                        placeholder="Ingrese telefono de contacto"
-                                    />
-                                    {touched.telefono2 && errors.telefono2 && (
-                                        <div>{errors.telefono2}</div>
-                                    )}
-                                </FormGroup>
-
-                                {/* <FormGroup
-                                    as={Col}
-                                    md="3"
-                                    controlId="form6"
-                                    className="position-relative"
-                                    required
-                                >
-                                    <FormLabel>Departamento</FormLabel>
-                                    <Field
-                                        name="departamento"
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Ingrese el departamento"
-                                    >
-
-                                    </Field>
-                                    {touched.departamento &&
-                                        errors.departamento && (
-                                            <div>{errors.departamento}</div>
-                                        )}
-                                </FormGroup>
-                                <FormGroup
-                                    as={Col}
-                                    md="3"
-                                    controlId="form7"
-                                    className="position-relative"
-                                    required
-                                >
-                                    <FormLabel>Ciudad</FormLabel>
-                                    <Field
-                                        name="ciudad"
-                                        className="form-control"
-                                        type="tex"
-                                        placeholder="Ingrese ciudad"
-                                    >
-                                    </Field>
-                                    {touched.ciudad && errors.ciudad && (
-                                        <div>{errors.ciudad}</div>
-                                    )}
-                                </FormGroup> */}
-                            </Row>
-                             <Row className="mb-3">
-{/*                                 <FormGroup
-                                    as={Col}
-                                    md="4"
-                                    controlId="form8"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>Direccion</FormLabel>
-                                    <Field
-                                        name="direccion"
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Direccion de residencia o local"
-                                    />
-                                    {touched.direccion && errors.direccion && (
-                                        <div>{errors.direccion}</div>
-                                    )}
-                                </FormGroup> */}
-
-                                <FormGroup
-                                    as={Col}
-                                    md="4"
-                                    controlId="form10"
-                                    className="position-relative"
-                                    required
-                                >
-                                    {' '}
-                                    <FormLabel>
-                                        Ingrese una imagen corporativa
-                                    </FormLabel>
-                                    <div>
-                                        <InputFiles
-                                            onChange={(files) =>
-                                                setFile(files[0] ?? { name: '' })
-                                            }
-                                        >
-                                            <InputGroup>
-                                                <InputGroup.Text id="basic-addon1">
-                                                    <Icon className="fas fa-file-upload" />
-                                                </InputGroup.Text>
-                                                <FormControl
-                                                    placeholder={file.name}
-                                                    aria-label="file"
-                                                    aria-describedby="basic-addon1"
-                                                    // value={() => file.name}
-                                                    required={
-                                                        file.name === ''
-                                                            ? true
-                                                            : false
-                                                    }
-                                                />
-                                            </InputGroup>
-                                        </InputFiles>
-                                    </div>
-                                </FormGroup>
-                            </Row> 
-                            <Row className="mb-3">
-                                <FormGroup
-                                    as={Col}
-                                    md="12"
-                                    controlId="form11"
-                                    className="position-relative"
-                                >
-                                    <FormLabel>
-                                        Mensaje Descriptivo o Slogan
-                                    </FormLabel>
-                                    <Field
-                                        as="textarea"
-                                        rows={3}
-                                        name="msg_description"
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Ingrese un mensaje descriptivo o slogan"
-                                    />
-                                    {touched.msg_description &&
-                                        errors.msg_description && (
-                                            <div>{errors.msg_description}</div>
-                                        )}
-                                </FormGroup>
-                            </Row>
-
-
-                            <Row className="mb-3">
+        <Container>
+            <Formik
+                initialValues={{
+                    name: '',
+                    last_name: '',
+                    document_number: '',
+                    email: '',
+                    phone: '',
+                    phone2: '',
+                    password: '',
+                    description_profile: '',
+                    document_type_id: '',
+                    user_type_id: '',
+                    user_name: '',
+                    terms: false,
+                }}
+                validationSchema={DisplayingErrorMessagesSchema}
+                onSubmit={(values) => carga(values, file)}
+            >
+                {({ errors, touched }) => (
+                    <Form>
+                        <Row className="mb-3">
                             <FormGroup
                                 as={Col}
                                 md="4"
-                                controlId="form18"
+                                controlId="form1"
+                                className="position-relative"
+                            >
+                                <FormLabel>Nombre</FormLabel>
+                                <Field
+                                    name="name"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese su nombre "
+                                />
+                                {touched.name && errors.name && (
+                                    <div>{errors.name}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form1"
+                                className="position-relative"
+                            >
+                                <FormLabel>Apellidos</FormLabel>
+                                <Field
+                                    name="last_name"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese sus apellidos "
+                                />
+                                {touched.last_name && errors.last_name && (
+                                    <div>{errors.last_name}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form1"
+                                className="position-relative"
+                            >
+                                <FormLabel>Documento</FormLabel>
+                                <Field
+                                    name="document_number"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese su numero de documento "
+                                />
+                                {touched.document_number && errors.document_number && (
+                                    <div>{errors.document_number}</div>
+                                )}
+                            </FormGroup>
+                        </Row>
+                        <Row className="mb-3">
+                        <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form7"
+                                className="position-relative"
+                            >
+                                <FormLabel>Tipo de documento</FormLabel>
+                                <Field
+                                    name="document_type_id"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="tipo de documento"
+                                />
+                                {touched.document_type_id && errors.document_type_id && (
+                                    <div>{errors.document_type_id}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form2"
+                                className="position-relative"
+                            >
+                                <FormLabel>Correo electronico</FormLabel>
+                                <Field
+                                    name="email"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese correo electronico"
+                                />
+                                {touched.email && errors.email && (
+                                    <div>{errors.email}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form4"
+                                className="position-relative"
+                            >
+                                <FormLabel>Contraseña</FormLabel>
+                                <Field
+                                    name="password"
+                                    type="password"
+                                    className="form-control"
+                                    placeholder="Escriba su clave"
+                                />
+                                {touched.password && errors.password && (
+                                    <div>{errors.password}</div>
+                                )}
+                            </FormGroup>
+                        </Row>
+                        <Row className="mb-3">
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form3"
+                                className="position-relative"
+                            >
+                                <FormLabel>Telefono de contacto</FormLabel>
+                                <Field
+                                    name="phone"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese telefono de contacto"
+                                />
+                                {touched.phone && errors.phone && (
+                                    <div>{errors.phone}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form3"
+                                className="position-relative"
+                            >
+                                <FormLabel>Telefono Alternativo</FormLabel>
+                                <Field
+                                    name="phone2"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese telefono alternativo"
+                                />
+                                {touched.phone2 && errors.phone2 && (
+                                    <div>{errors.phone2}</div>
+                                )}
+                            </FormGroup>
+                            
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form9"
+                                className="position-relative"
+                                required
+                            >
+                                {' '}
+                                <FormLabel>
+                                    Ingrese una imagen corporativa
+                                </FormLabel>
+                                <div>
+                                    <InputFiles
+                                        onChange={(files) =>
+                                            setFile(files[0] ?? { name: '' })
+                                        }
+                                    >
+                                        <InputGroup>
+                                            <InputGroup.Text id="basic-addon1">
+                                                <Icon className="fas fa-file-upload" />
+                                            </InputGroup.Text>
+                                            <FormControl
+                                                placeholder={file.name}
+                                                aria-label="file"
+                                                aria-describedby="basic-addon1"
+                                                // value={() => file.name}
+                                                required={
+                                                    file.name === ''
+                                                        ? true
+                                                        : false
+                                                }
+                                            />
+                                        </InputGroup>
+                                    </InputFiles>
+                                </div>
+                            </FormGroup>
+                            
+                        </Row>
+                        <Row>
+                        <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form3"
+                                className="position-relative"
+                            >
+                                <FormLabel>Nombre de usuario</FormLabel>
+                                <Field
+                                    name="user_name"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="nombre de usuario"
+                                />
+                                {touched.user_name && errors.user_name && (
+                                    <div>{errors.user_name}</div>
+                                )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form3"
+                                className="position-relative"
+                            >
+                                <FormLabel>Tipo usuario</FormLabel>
+                                <Field
+                                    name="user_type_id"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="tipo de usuario"
+                                />
+                                {touched.user_type_id && errors.user_type_id && (
+                                    <div>{errors.user_type_id}</div>
+                                )}
+                            </FormGroup>
+                        </Row>
+                        <Row className="mb-3">
+                            <FormGroup
+                                as={Col}
+                                md="12"
+                                controlId="form10"
+                                className="position-relative"
+                            >
+                                <FormLabel>
+                                    Mensaje Descriptivo o Slogan
+                                </FormLabel>
+                                <Field
+                                    as="textarea"
+                                    rows={3}
+                                    name="description_profile"
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ingrese un mensaje descriptivo o slogan"
+                                />
+                                {touched.description_profile &&
+                                    errors.description_profile && (
+                                        <div>{errors.description_profile}</div>
+                                    )}
+                            </FormGroup>
+                        </Row>
+                        <Row className="mb-3">
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form11"
                                 className="position-relative"
                             >
                                 <FormCheck
@@ -387,54 +419,49 @@ export const RegistroComp = () => {
                                 />
                             </FormGroup>
                         </Row>
-
-
-
-
-
-
-                            <Row>
-                                <Col>
-                                    <Button
-                                        variant="link"
-                                        onClick={() => setShow(true)}
-                                    >
-                                        Ver terminos y condiciones
-                                    </Button>
-                                </Col>
-                                <Col
-                                    md={{ span: 4, offset: 8 }}
-                                    className="d-grid gap-2"
+                        <Row>
+                            <Col>
+                                <Button
+                                    variant="link"
+                                    onClick={() => setShow(true)}
                                 >
-                                    <Button
-                                        variant="outline-primary"
-                                        type="submit"
-                                        size="lg"
-                                    >
-                                        Registrar
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Form>
-                    )}
-                </Formik>
-                <Modal size="lg" show={show} onHide={handleClose}>
-                    <ModalBody>
-                        <Card>
-                            <CardImg src={URL + '/profesional/terminos'}></CardImg>{' '}
-                        </Card>
-                        <Button
-                            as={Col}
-                            md={{ span: 4, offset: 8 }}
-                            variant="outline-primary"
-                            style={{ marginTop: '10px' }}
-                            onClick={handleClose}
-                        >
-                            Cerrar
-                        </Button>
-                    </ModalBody>
-                </Modal>
-            </Container>
+                                    Ver terminos y condiciones
+                                </Button>
+                            </Col>
+                            <Col
+                                md={{ span: 4, offset: 8 }}
+                                className="d-grid gap-2"
+                            >
+                                <Button
+                                    variant="outline-primary"
+                                    type="submit"
+                                    size="lg"
+                                >
+                                    Registrar
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+                )}
+            </Formik>
+            <Modal size="lg" show={show} onHide={handleClose}>
+                <ModalBody>
+                    <Card>
+                        <CardImg src={URL + '/user/terminos'}></CardImg>{' '}
+                    </Card>
+                    <Button
+                        as={Col}
+                        md={{ span: 4, offset: 8 }}
+                        variant="outline-primary"
+                        style={{ marginTop: '10px' }}
+                        onClick={handleClose}
+                    >
+                        Cerrar
+                    </Button>
+                </ModalBody>
+            </Modal>
+        </Container>
         </MainLayout>
     );
 };
+
