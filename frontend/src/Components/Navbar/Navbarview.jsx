@@ -26,7 +26,7 @@ const Navbarview = () => {
                             <Nav.Link href="#pricing">Profesionales</Nav.Link>
                         </Nav>
                         <Nav className="mx-auto">
-                            <Nav.Link href="/aboutUs">Nosotros</Nav.Link>
+                            <Nav.Link href="/aboutUs">¿Quiénes somos?</Nav.Link>
                         </Nav>
                         <Nav className="mx-auto">
                             <Nav.Link href="/logincliente">Ingresar</Nav.Link>

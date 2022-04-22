@@ -13,11 +13,17 @@ body {
 
 header a{
   color:#38405F !important;
-  font-size: 20px;
-  font-weight: normal  ;
+  font-size: 24px;
+  font-weight: normal;  
 }
+
+header a:hover{
+  color: #FF0035 !important;
+  font-weight:bold;
+}
+
 header img{
-  width: 5rem;
+  width: 8rem;
   
 }
 

@@ -139,6 +139,11 @@ const ImageSectionStyled = styled.div`
             border-radius:2em;
             background-color:#38405F;
             width:50%;
+            font-size:1.3em;
+            :hover{
+                filter:brightness(1.4);
+            }
+
             
         }
     }

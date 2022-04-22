@@ -60,6 +60,12 @@ const ServiciosHome = () => {
 const ServicioStyled = styled.div`
 
 
+
+    p{
+        font-size:1.3em;
+    }
+
+
     
     
     
