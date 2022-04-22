@@ -6,6 +6,7 @@ import Home from './Page/Home'
 import Navbarview from './Components/Navbar/Navbarview';
 import CategoriasRegistro from './Page/CategoriasRegistro';
 import RegistroProfesionalpage from './Page/RegistroProfesionalpage';
+import AboutUsPage from './Page/AboutUsPage';
 
 
 
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/logincliente' element={<LoginClientePage />} />
+        <Route path='/aboutUs' element={<AboutUsPage />} />
         <Route path='/registrocliente' element={<RegistroClientesPage />} />
         <Route path='/CategoriaRegistro' element={<CategoriasRegistro />} />
         <Route path='/registroprofesional' element={<RegistroProfesionalpage />} />
