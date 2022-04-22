@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import logo from '../../image/circulo.png';
 import { NavDropdown } from 'react-bootstrap';
 import registrar from '../../image/registra.png'
+import AboutUsPage from '../../Page/AboutUsPage';
 
 
 const Navbarview = () => {
@@ -25,7 +26,7 @@ const Navbarview = () => {
                             <Nav.Link href="#pricing">Profesionales</Nav.Link>
                         </Nav>
                         <Nav className="mx-auto">
-                            <Nav.Link href="#deets">Nosotros</Nav.Link>
+                            <Nav.Link href="/aboutUs">Nosotros</Nav.Link>
                         </Nav>
                         <Nav className="mx-auto">
                             <Nav.Link href="/logincliente">Ingresar</Nav.Link>
