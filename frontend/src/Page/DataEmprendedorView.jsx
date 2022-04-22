@@ -93,7 +93,7 @@ function DataEmprendedorView() {
                 <Container>
                     <Row>
                         <Title
-                            title={'Datos Emprendedor'}
+                            title={'Datos Profesional'}
                             
                         />
                     </Row>
