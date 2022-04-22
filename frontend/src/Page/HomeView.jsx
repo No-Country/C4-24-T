@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import Button from 'react-bootstrap/Button'
 import resume from '../image/paisa.jpg';
 import { InnerLayout, MainLayout } from '../styles/Layouts';
-import Carrusel from '../Components/Carrusel/Carrusel';
-import ServiciosHome from '../Components/ServicioHome/ServiciosHome';
-import Servicio from '../Components/ServicioHome/Servicio';
-import FooterComp from '../Components/footer/FooterComp';
-import Resultados from '../Components/ServicioHome/Resultados';
+import Carrusel from '../components/Carrusel';
+import ServiciosHome from '../components/ServicioHome/ServiciosHome';
+import Servicio from '../components/ServicioHome/Servicio';
+import FooterComp from '../components/FooterComp';
+import Resultados from '../components/ServicioHome/Resultados';
+
 
 
 
@@ -19,7 +20,7 @@ function Home() {
         <MainLayout>
         <ImageSectionStyled>
             
-            <div className="right-content">
+        <div className="right-content">
                 <h4><span>¿Necesitas ayuda</span> y estás en <span>busca</span> de un profesional? </h4>
                 <p className="paragraph">
                     Contáctate con nuestros especialistas. <br></br> Están certificados y te van a brindar el <br></br> mejor servicio.                    
@@ -31,7 +32,6 @@ function Home() {
             <div className="left-content">
                 <img src={resume} alt=""/>
             </div>
-            
         </ImageSectionStyled>
         </MainLayout>
         <InnerLayout>
@@ -44,7 +44,8 @@ function Home() {
         </MainLayout>
         <ServiciosHome/>
         <Resultados/>
-        <FooterComp/>
+        <FooterComp/> 
+        
         </>
     )
 }
@@ -53,8 +54,6 @@ function Home() {
 const ImageSectionStyled = styled.div`
     margin-top: 5rem;
     display: flex;
-    width:90%;
-    margin-left:10%;
     
     @media screen and (max-width:1000px){
         flex-direction: column-reverse;
@@ -117,9 +116,7 @@ const ImageSectionStyled = styled.div`
             color:#FF0035;
             font-size: 4rem;
             margin-top: 5rem;
-             }
-
-      
+            }
 
         .paragraph{
             padding: 1rem 0;
