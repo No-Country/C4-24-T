@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from './FooterItem';
-import footerLogo from '../../image/logoFooter.jpeg'
-import { Icon } from '../../styles/icons';
+import footerLogo from '../image/logoFooter.jpeg'
+import { Icon } from '../styles/icons';
 
 
 function FooterComp() {

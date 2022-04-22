@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import Carousel from "react-elastic-carousel";
 import Item from "./itemCarrusel";
-import "../../styles/styles.css";
+import "../styles/styles.css";
 import styled from "styled-components";
 import Button from "react-bootstrap/esm/Button";
 

@@ -18,110 +18,89 @@ import {
     CardImg,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
-import Icon from '../Icons/Icons';
+import Icon from './Icons';
 import InputFiles from 'react-input-files';
-import { MainLayout } from '../../styles/Layouts';
+import { Categorias, Departamentos, Ciudades } from '../libs/search.lib';
+import { URL } from '../libs/url';
 
 const DisplayingErrorMessagesSchema = Yup.object().shape({
-    name: Yup.string()
+    nombre: Yup.string()
         .min(2, 'Nombre muy corto!')
         .max(40, 'Nombre muy largo!')
         .required('Campo Requerido'),
-    last_name: Yup.string()
-        .min(2, 'Nombre muy corto!')
-        .max(40, 'Nombre muy largo!')
-        .required('Campo Requerido'),
-    document_number: Yup.string()
-        .min(2, 'Nombre muy corto!')
-        .max(40, 'Nombre muy largo!')
-        .required('Campo Requerido'),
-    email: Yup.string().email('Invalid email').required('Campo Requerido'),
-    phone: Yup.number()
+    mail: Yup.string().email('Invalid email').required('Campo Requerido'),
+    telefono: Yup.number()
         .min(0, 'Numero muy corto!')
         .max(9999999999999, 'Numero muy largo!')
         .required('Campo Requerido'),
-    phone2: Yup.number()
-        .min(0, 'Numero muy corto!')
-        .max(9999999999999, 'Numero muy largo!'),
     password: Yup.string()
         .min(8, 'Constraseña muy corta!')
         .max(20, 'Contraseña muy larga!')
         .required('Campo Requerido'),
-    description_profile: Yup.string()
-            .min(10, 'Mensaje muy corto!')
-            .max(500, 'Mensaje muy largo!')
-            .required('Campo Requerido'),
-    document_type_id: Yup.string()
-        .min(1, 'Direccion muy corta!')
-        .max(40, 'Direccion muy largo!')
-        .required('Campo Requerido'),
-    user_type_id: Yup.string()
-        .min(1, 'Direccion muy corta!')
-        .max(40, 'Direccion muy largo!')
-        .required('Campo Requerido'),
-    user_name: Yup.string()
+    actividad: Yup.string().required('Campo Requerido'),
+    direccion: Yup.string()
         .min(3, 'Direccion muy corta!')
         .max(40, 'Direccion muy largo!')
         .required('Campo Requerido'),
+    msg_description: Yup.string()
+        .min(10, 'Mensaje muy corto!')
+        .max(500, 'Mensaje muy largo!')
+        .required('Campo Requerido'),
 });
 
-const carga = async (value, file) => {
+const carga = async (values, file, departamento, ciudad) => {
     const {
-        name,
-        last_name,
-        document_number,
-        email,
-        phone,
-        phone2,
+        nombre,
+        telefono,
+        mail,
         password,
-        description_profile,
-        document_type_id,
-        user_type_id,
-        user_name,
-        
-    } = value;
+        actividad,
+        direccion,
+        msg_description,
+    } = values;
 
     const data = new FormData();
-    data.append('avatar', file);
-    data.append('name', name);
-    data.append('last_name', last_name);
-    data.append('document_number', document_number);
-    data.append('email', email);
-    data.append('phone', phone);
-    data.append('phone2', phone2);
+    data.append('img', file);
+    data.append('nombre', nombre);
+    data.append('telefono', telefono);
+    data.append('mail', mail);
     data.append('password', password);
-    data.append('description_profile', description_profile);
-    data.append('document_type_id', document_type_id);
-    data.append('user_type_id', user_type_id);
-    data.append('user_name', user_name);
+    data.append('actividad', actividad);
+    data.append('direccion', direccion);
+    data.append('msg_description', msg_description);
+    data.append('departamento', departamento);
+    data.append('ciudad', ciudad);
 
-    await Axios.post('https://app-work-fast.herokuapp.com/api/v1/users/', data)
+    await Axios.post('emprendedor/create', data)
         .then((response) => {
-            const user_name = response.data.message;
-            if (!user_name) {
+            const auth = response.data.auth;
+            if (!auth) {
                 Swal.fire({
                     icon: 'error',
-                    title: response.data.message,
+                    title: response.data.mensaje,
                     showConfirmButton: false,
                     timer: 1500,
                 });
             } else {
                 console.log(response);
-                
-                window.location.href = '/profesional'; 
+                const token = response.data.token;
+                const id = response.data.id;
+                sessionStorage.setItem('token', token);
+                sessionStorage.setItem('id', id);
+                window.location.href = '/emprendedor'; //pendiente ruta de pagina a la que pasara despues de login
 
                 Swal.fire({
                     icon: 'success',
-                    title: response.data.message,
+                    title: response.data.mensaje,
                     showConfirmButton: false,
                     timer: 1500,
                 });
             }
         })
-        .catch((message) => {
-            console.log(message);
+        .catch((err) => {
+            console.log(err);
         });
-    return 'profesionales';
+    return 'emprendedores';
 };
 
 // Creacion de options para selects
@@ -131,8 +110,10 @@ const options = (item, i) => (
     </option>
 );
 
-export const RegistroProfesional = () => {
+export const RegistroComp = () => {
     const [file, setFile] = useState({ name: '' });
+    const [departamento, setDepartamento] = useState('Departamentos');
+    const [ciudad, setCiudad] = useState('Ciudades');
     const [show, setShow] = useState(false);
 
     // Close modal
@@ -141,25 +122,20 @@ export const RegistroProfesional = () => {
     };
 
     return (
-        <MainLayout>
         <Container>
             <Formik
                 initialValues={{
-                    name: '',
-                    last_name: '',
-                    document_number: '',
-                    email: '',
-                    phone: '',
-                    phone2: '',
+                    nombre: '',
+                    mail: '',
+                    telefono: '',
                     password: '',
-                    description_profile: '',
-                    document_type_id: '',
-                    user_type_id: '',
-                    user_name: '',
+                    actividad: '',
+                    direccion: '',
+                    msg_description: '',
                     terms: false,
                 }}
                 validationSchema={DisplayingErrorMessagesSchema}
-                onSubmit={(values) => carga(values, file)}
+                onSubmit={(values) => carga(values, file, departamento, ciudad)}
             >
                 {({ errors, touched }) => (
                     <Form>
@@ -170,68 +146,15 @@ export const RegistroProfesional = () => {
                                 controlId="form1"
                                 className="position-relative"
                             >
-                                <FormLabel>Nombre</FormLabel>
+                                <FormLabel>Nombre </FormLabel>
                                 <Field
-                                    name="name"
+                                    name="nombre"
                                     className="form-control"
                                     type="text"
-                                    placeholder="Ingrese su nombre "
+                                    placeholder="Ingrese nombre o la razon social"
                                 />
-                                {touched.name && errors.name && (
-                                    <div>{errors.name}</div>
-                                )}
-                            </FormGroup>
-                            <FormGroup
-                                as={Col}
-                                md="4"
-                                controlId="form1"
-                                className="position-relative"
-                            >
-                                <FormLabel>Apellidos</FormLabel>
-                                <Field
-                                    name="last_name"
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="Ingrese sus apellidos "
-                                />
-                                {touched.last_name && errors.last_name && (
-                                    <div>{errors.last_name}</div>
-                                )}
-                            </FormGroup>
-                            <FormGroup
-                                as={Col}
-                                md="4"
-                                controlId="form1"
-                                className="position-relative"
-                            >
-                                <FormLabel>Documento</FormLabel>
-                                <Field
-                                    name="document_number"
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="Ingrese su numero de documento "
-                                />
-                                {touched.document_number && errors.document_number && (
-                                    <div>{errors.document_number}</div>
-                                )}
-                            </FormGroup>
-                        </Row>
-                        <Row className="mb-3">
-                        <FormGroup
-                                as={Col}
-                                md="4"
-                                controlId="form7"
-                                className="position-relative"
-                            >
-                                <FormLabel>Tipo de documento</FormLabel>
-                                <Field
-                                    name="document_type_id"
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="tipo de documento"
-                                />
-                                {touched.document_type_id && errors.document_type_id && (
-                                    <div>{errors.document_type_id}</div>
+                                {touched.nombre && errors.nombre && (
+                                    <div>{errors.nombre}</div>
                                 )}
                             </FormGroup>
                             <FormGroup
@@ -242,22 +165,41 @@ export const RegistroProfesional = () => {
                             >
                                 <FormLabel>Correo electronico</FormLabel>
                                 <Field
-                                    name="email"
+                                    name="mail"
                                     className="form-control"
                                     type="text"
                                     placeholder="Ingrese correo electronico"
                                 />
-                                {touched.email && errors.email && (
-                                    <div>{errors.email}</div>
+                                {touched.mail && errors.mail && (
+                                    <div>{errors.mail}</div>
                                 )}
                             </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form3"
+                                className="position-relative"
+                            >
+                                <FormLabel>Telefono de contacto</FormLabel>
+                                <Field
+                                    name="telefono"
+                                    className="form-control"
+                                    type="number"
+                                    placeholder="Ingrese telefono de contacto"
+                                />
+                                {touched.telefono && errors.telefono && (
+                                    <div>{errors.telefono}</div>
+                                )}
+                            </FormGroup>
+                        </Row>
+                        <Row className="mb-3">
                             <FormGroup
                                 as={Col}
                                 md="4"
                                 controlId="form4"
                                 className="position-relative"
                             >
-                                <FormLabel>Contraseña</FormLabel>
+                                <FormLabel>Clave</FormLabel>
                                 <Field
                                     name="password"
                                     type="password"
@@ -268,43 +210,100 @@ export const RegistroProfesional = () => {
                                     <div>{errors.password}</div>
                                 )}
                             </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form5"
+                                className="position-relative"
+                                required
+                            >
+                                <FormLabel>Documento</FormLabel>
+                                <Field
+                                    as="select"
+                                    name={departamento}
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Departamentos"
+                                    onChange={(e) =>
+                                        setDepartamento(e.target.value)
+                                    }
+                                >
+                                    {Departamentos.map((item, i) =>
+                                        item === 'Departamentos'
+                                            ? ''
+                                            : options(item, i)
+                                    )}
+                                </Field>
+                                {touched.departamento &&
+                                    errors.departamento && (
+                                        <div>{errors.departamento}</div>
+                                    )}
+                            </FormGroup>
+                            <FormGroup
+                                as={Col}
+                                md="4"
+                                controlId="form6"
+                                className="position-relative"
+                                required
+                            >
+                                <FormLabel>Tipo Documento</FormLabel>
+                                <Field
+                                    as="select"
+                                    name={ciudad}
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Ciudades"
+                                    onChange={(e) => setCiudad(e.target.value)}
+                                >
+                                    {Ciudades[
+                                        Departamentos.indexOf(departamento)
+                                    ].map((item, i) => options(item, i))}
+                                </Field>
+                                {touched.ciudad && errors.ciudad && (
+                                    <div>{errors.ciudad}</div>
+                                )}
+                            </FormGroup>
                         </Row>
                         <Row className="mb-3">
                             <FormGroup
                                 as={Col}
                                 md="4"
-                                controlId="form3"
+                                controlId="form7"
                                 className="position-relative"
                             >
-                                <FormLabel>Telefono de contacto</FormLabel>
+                                <FormLabel>Direccion</FormLabel>
                                 <Field
-                                    name="phone"
+                                    name="direccion"
                                     className="form-control"
                                     type="text"
-                                    placeholder="Ingrese telefono de contacto"
+                                    placeholder="Direccion de residencia o local"
                                 />
-                                {touched.phone && errors.phone && (
-                                    <div>{errors.phone}</div>
+                                {touched.direccion && errors.direccion && (
+                                    <div>{errors.direccion}</div>
                                 )}
                             </FormGroup>
                             <FormGroup
                                 as={Col}
                                 md="4"
-                                controlId="form3"
+                                controlId="form8"
                                 className="position-relative"
                             >
-                                <FormLabel>Telefono Alternativo</FormLabel>
+                                <FormLabel>Actividad</FormLabel>
                                 <Field
-                                    name="phone2"
+                                    as="select"
+                                    name="actividad"
                                     className="form-control"
                                     type="text"
-                                    placeholder="Ingrese telefono alternativo"
-                                />
-                                {touched.phone2 && errors.phone2 && (
-                                    <div>{errors.phone2}</div>
+                                    placeholder="Categorias"
+                                >
+                                    {Categorias.map((item, i) =>
+                                        options(item, i)
+                                    )}
+                                </Field>
+                                {touched.actividad && errors.actividad && (
+                                    <div>{errors.actividad}</div>
                                 )}
                             </FormGroup>
-                            
                             <FormGroup
                                 as={Col}
                                 md="4"
@@ -341,43 +340,6 @@ export const RegistroProfesional = () => {
                                     </InputFiles>
                                 </div>
                             </FormGroup>
-                            
-                        </Row>
-                        <Row>
-                        <FormGroup
-                                as={Col}
-                                md="4"
-                                controlId="form3"
-                                className="position-relative"
-                            >
-                                <FormLabel>Nombre de usuario</FormLabel>
-                                <Field
-                                    name="user_name"
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="nombre de usuario"
-                                />
-                                {touched.user_name && errors.user_name && (
-                                    <div>{errors.user_name}</div>
-                                )}
-                            </FormGroup>
-                            <FormGroup
-                                as={Col}
-                                md="4"
-                                controlId="form3"
-                                className="position-relative"
-                            >
-                                <FormLabel>Tipo usuario</FormLabel>
-                                <Field
-                                    name="user_type_id"
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="tipo de usuario"
-                                />
-                                {touched.user_type_id && errors.user_type_id && (
-                                    <div>{errors.user_type_id}</div>
-                                )}
-                            </FormGroup>
                         </Row>
                         <Row className="mb-3">
                             <FormGroup
@@ -392,14 +354,14 @@ export const RegistroProfesional = () => {
                                 <Field
                                     as="textarea"
                                     rows={3}
-                                    name="description_profile"
+                                    name="msg_description"
                                     className="form-control"
                                     type="text"
                                     placeholder="Ingrese un mensaje descriptivo o slogan"
                                 />
-                                {touched.description_profile &&
-                                    errors.description_profile && (
-                                        <div>{errors.description_profile}</div>
+                                {touched.msg_description &&
+                                    errors.msg_description && (
+                                        <div>{errors.msg_description}</div>
                                     )}
                             </FormGroup>
                         </Row>
@@ -420,14 +382,7 @@ export const RegistroProfesional = () => {
                             </FormGroup>
                         </Row>
                         <Row>
-                            <Col>
-                                <Button
-                                    variant="link"
-                                    onClick={() => setShow(true)}
-                                >
-                                    Ver terminos y condiciones
-                                </Button>
-                            </Col>
+                            
                             <Col
                                 md={{ span: 4, offset: 8 }}
                                 className="d-grid gap-2"
@@ -461,7 +416,5 @@ export const RegistroProfesional = () => {
                 </ModalBody>
             </Modal>
         </Container>
-        </MainLayout>
     );
 };
-

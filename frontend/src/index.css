@@ -13,23 +13,20 @@ body {
 
 header a{
   color:#38405F !important;
-  font-size: 24px;
-  font-weight: normal;  
+  font-size: 20px;
+  font-weight: normal  ;
 }
-
-header a:hover{
-  color: #FF0035 !important;
-  font-weight:bold;
-}
-
 header img{
-  width: 8rem;
+  width: 5rem;
   
 }
 
 .navbar-expand-sm .navbar-collapse {
   display: flex ;
   align-content: space-around;
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: #0d6efd !important;
 }
 .ontainer-fluid header nav  a{
   text-decoration:none;
@@ -42,6 +39,9 @@ header img{
 .color-nav {  
   background-color: #f7f7f7 !important; 
   
+}
+.fondo-nav{
+  background-color: #37405F !important
 }
 
 .card {
@@ -74,10 +74,10 @@ header img{
 .card-text{
   justify-content: space-evenly;
   display: flex;
-  color: aliceblue;
+  color: #0d6efd !important;
 }
 .card-title{
-  color: aliceblue;
+  color: #FF0035 !important;
   justify-content: space-evenly;
   display: flex;
 }

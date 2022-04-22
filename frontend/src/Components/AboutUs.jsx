@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { MainLayout } from "../../styles/Layouts";
-import img1 from '../../image/aboutUsAssets/img1.jpeg'
-import img2 from '../../image/aboutUsAssets/img2.jpeg';
-import img3 from '../../image/aboutUsAssets/img3.jpeg';
-import img4 from '../../image/aboutUsAssets/img4.jpeg';
+import { MainLayout } from "../styles/Layouts";
+import img1 from '../image/aboutUsAssets/img1.jpeg'
+import img2 from '../image/aboutUsAssets/img2.jpeg';
+import img3 from '../image/aboutUsAssets/img3.jpeg';
+import img4 from '../image/aboutUsAssets/img4.jpeg';
 
 
 

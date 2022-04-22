@@ -1,14 +1,16 @@
-import React from 'react';
-import LoginComp from '../Components/login/LoginComp';
+import React from 'react'
+import LoginComp from '../components/LoginComp';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
+import Title from '../components/Title';
 import { Container } from 'react-bootstrap';
 import { MainLayout } from '../styles/Layouts';
 
-function LoginClientePage() {
-    const loginCliente = async (data) => {
-        const cliente = { email: data.email, password: data.password };
-        await Axios.post('user/login', cliente)
+function LoginEmprendedorView() {
+
+    const loginEmprendedor = async (data) => {
+        const emprendedor = { mail: data.email, password: data.password };
+        await Axios.post('emprendedor/login', emprendedor)
             .then((respuesta) => {
                 const auth = respuesta.data.auth;
                 if (!auth) {
@@ -20,13 +22,12 @@ function LoginClientePage() {
                     });
                 } else {
                     const token = respuesta.data.token;
-                    const id = respuesta.data.usuario._id;
-                    const nombre = respuesta.data.usuario.nombre;
+                    const id = respuesta.data.emprendedor._id;
+                    const nombre = respuesta.data.emprendedor.nombre;
                     sessionStorage.setItem('token', token);
                     sessionStorage.setItem('id', id);
-                    sessionStorage.setItem('nombre', nombre);
-                    sessionStorage.setItem('rol', 'user')
-                    window.location.href = '/cliente'; //pendiente ruta de pagina a la que pasara despues de login
+                    sessionStorage.setItem('nombre', nombre)
+                    window.location.href = '/emprendedor'; //pendiente ruta de pagina a la que pasara despues de login
 
                     Swal.fire({
                         icon: 'success',
@@ -41,14 +42,18 @@ function LoginClientePage() {
             });
     };
 
+
     return (
         <MainLayout>
-            <Container className="contenedor">
-                
-                <LoginComp login={loginCliente} registro="block" rol='/registrocliente'/>
+            <Container>
+                <Title
+                    title={'Login Emprendedores'}
+                    
+                />
+                <LoginComp login={loginEmprendedor} registro="block" />
             </Container>
         </MainLayout>
     );
 }
 
-export default LoginClientePage;
+export default LoginEmprendedorView

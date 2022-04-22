@@ -44,15 +44,11 @@ const ResultadosStyled = styled.div`
         align-items:center;
 
         h2{
-            font-weight:bold;
-            font-size:2.5em;
             color:#FF0033;
         }
 
         p{
             color:#38405F;
-            font-weight:bold;
-            font-size:1.2em;
         }
     }
 `

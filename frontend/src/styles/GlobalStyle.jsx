@@ -2,11 +2,26 @@ import {createGlobalStyle} from 'styled-components';
 
 
 const GlobalStyle = createGlobalStyle`
- :root{
-    --background-dark-color: #f7f7f7;    
+:root{
+    --primary-color: #007bff;
+    --primary-color-light: #057FFF;
+    --secondary-color: #6c757d;
+    --background-dark-color: #F1F1F1;
+    --background-dark-grey: #fcfcfc;
+    --border-color: #000000;
+    --background-light-color: #F1F1F1;
+    --background-light-color-2: rgba(3, 238, 255, 0.288);
+    --white-color: #030303;
+    --font-light-color: #000000;
+    --font-dark-color: #313131;
+    --font-dark-color-2: #151515;
+    --sidebar-dark-color: #191D2B;
+    --scrollbar-bg-color: #383838;
+    --scrollbar-thump-color: #6b6b6b;
+    --fondocolor: #afadadd6;
+    --colorlogo: #00d9ff
+
 } 
-
-
 
 
 *{
@@ -24,7 +39,6 @@ body{
     background-color: var(--background-dark-color);
     color: var(--font-light-color);
     transition: all .4s ease-in-out;
-    
 }
 
 body::-webkit-scrollbar{
@@ -73,56 +87,7 @@ h6{
     padding-bottom: .6rem;
 }
 
-//Utilities
-.u-margin-bottom{
-    margin-bottom: 4rem;
-}
 
-
-//Floting Toggler
-.light-dark-mode{
-    position: fixed;
-    right: 0;
-    top: 50%;
-    background-color: var(--background-light-color-2);
-    width: 6.5rem;
-    height: 2.5rem;
-    z-index: 15;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    svg{
-      display: flex;
-      align-items: center;
-      font-size: 1.7rem;
-      color: var(--white-color);
-    }
-  }
-
-  //Nav Toggler
-  .ham-burger-menu{
-      position: absolute;
-      right: 5%;
-      top: 3%; 
-      display: none;
-      z-index: 15;
-      svg{
-          font-size: 3rem;
-      }
-    }
-
-    .nav-toggle{
-        transform: translateX(0);
-        z-index: 20;
-    }
-  @media screen and (max-width:1200px){
-    .ham-burger-menu{
-        display: block;
-    }
-  }
-
-
-//Global Media Queries
 
 
 
